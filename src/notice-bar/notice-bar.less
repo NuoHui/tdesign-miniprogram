@@ -1,0 +1,94 @@
+@import '../common/style/index.less';
+
+@notice-bar-height: 46px;
+@notice-bar-font-size: 14px;
+@notice-bar-horizen-padding: 32rpx;
+@notice-bar-vertical-padding: 24rpx;
+@notice-bar-line-height: 22px;
+@notice-bar-icon-size: 22px;
+
+// color
+@notice-bar-info-background-color: #ecf2fe;
+@notice-bar-info-color: #0052d9;
+@notice-bar-success-background-color: #e8f8f2;
+@notice-bar-success-color: #00a870;
+@notice-bar-warning-background-color: #e8f8f2;
+@notice-bar-warning-color: #ed7b2f;
+@notice-bar-error-background-color: #fdecee;
+@notice-bar-error-color: #e34d59;
+
+@notice-bar: ~'@{prefix}-notice-bar';
+
+.@{notice-bar} {
+  display: flex;
+  padding: @notice-bar-vertical-padding @notice-bar-horizen-padding;
+  font-size: @notice-bar-font-size;
+
+  &__link {
+    display: flex;
+  }
+
+  &__left-icon {
+    margin-right: 8px;
+  }
+
+  &__right-icon {
+    margin-left: 8px;
+  }
+
+  &__content-wrap {
+    flex: 1;
+    overflow-x: hidden;
+    line-height: @notice-bar-line-height;
+  }
+
+  &__content {
+    display: inline-block;
+    white-space: nowrap;
+  }
+
+  //  多行文本
+  &__content-wrapable {
+    white-space: normal;
+  }
+
+  &__detail {
+    font-weight: 700;
+    margin-left: 16rpx;
+    border-bottom: 1px solid;
+  }
+
+  // theme
+  &--info {
+    color: @notice-bar-info-color;
+    background-color: @notice-bar-info-background-color;
+  }
+
+  &--success {
+    color: @notice-bar-success-color;
+    background-color: @notice-bar-success-background-color;
+  }
+
+  &--warning {
+    color: @notice-bar-warning-color;
+    background-color: @notice-bar-warning-background-color;
+  }
+
+  &--error {
+    color: @notice-bar-error-color;
+    background-color: @notice-bar-error-background-color;
+  }
+
+  // align
+  &--middle {
+    align-items: center;
+  }
+
+  &--top {
+    align-items: flex-start;
+  }
+
+  &--bottom {
+    align-items: flex-end;
+  }
+}
