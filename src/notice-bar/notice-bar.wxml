@@ -15,19 +15,22 @@
   <!-- conten -->
   <view class="{{classPrefix}}__content-wrap">
     <view
-      class="{{classPrefix}}__content {{ !marquee && wrapable ? classPrefix + '__content-wrapable' : ''}}"
+      class="{{classPrefix}}__content {{classPrefix}}-class-content {{ !marquee && wrapable ? classPrefix + '__content-wrapable' : ''}}"
       animation="{{ animationData }}"
     >
-      <view wx:if="{{content}}"> {{content}}</view>
+      <view wx:if="{{content}}" class="test"> {{content}}</view>
       <slot wx:else name="content"></slot>
     </view>
   </view>
 
   <!-- 详情 -->
-  <view wx:if="{{ showDetail }}" class="{{classPrefix}}__detail" bind:tap="handleDetail">
+  <view
+    wx:if="{{ showDetail && !wrapable }}"
+    class="{{classPrefix}}__detail {{prefix}}-class-detail"
+    bind:tap="handleDetail"
+  >
     {{ showDetail !== 'true' ? showDetail : '详情'}}
   </view>
-  <slot wx:else name="detail" />
 
   <!-- right icon -->
   <t-icon

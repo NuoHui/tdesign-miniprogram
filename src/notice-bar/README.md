@@ -79,15 +79,21 @@ isComponent: true
 ### Message Props
 
 | 名称 | 类型 | 默认值 | 说明 | 必传|
-| -- | -- | -- | -- | -- |
+| -------- | ------------- | --------- | -------------------- | -- |
 | align    | String        | middle    | 内容的对齐方式，默认居中对齐。可选项：top/middle/bottom | N   |
 | content  | String / Slot | -         | 用于自定义消息弹出内容  | N  |
-| external-classes | Array | -         | 样式类名，分别用于设置 组件外层、消息内容、左侧图标、右侧图标等元素类名。`['t-class', 't-class-content', 't-class-left-icon','t-alcas-right-icon']` | N |
+| marquee  | Boolean / Object | false  | 跑马灯效果。speed 指速度控制；loop 指循环播放次数，值为 -1 表示循环播放，值为 0 表示不循环播放；delay 表示延迟多久开始播放。| N       |
+| theme    | String        | info      | 消息组件风格。可选项：info/success/warning/error。| N |
+| visible  | Boolean       | false| 是否显示，隐藏时默认销毁组 | N   |
 | leftIcon | String / Boolean / Slot | true | 消息提醒前面的图标。值为 true 则根据 theme 显示对应的图标，值为 false 则不显示图标。组件内置图标可参考`t-icon`,也可以完全自定义图标节点。| N   |
-| marquee  | Boolean / Object        | false| 跑马灯效果。speed 指速度控制；loop 指循环播放次数，值为 -1 表示循环播放，值为 0 表示不循环播放；delay 表示延迟多久开始播放。| N       |
-| theme    | String  | info | 消息组件风格。可选项：info/success/warning/error。| N |
-| visible  | Boolean | false| 是否显示，隐藏时默认销毁组 | N   |
-| z-index  | Number  | -    | 元素层级，样式默认为 5000  | N |
+| mode     | String  |   -       | 通知栏模式，可选值为 closeable/link | N |
+| url      | String  |   -       | 通知栏模式为link时有效，跳转url | N |
+| openType | String  | `navigate`| 微信开放能力。通知栏模式为link时有效，默认navigate。可选值为 navigate/redirect/reLaunch/switchTab | N |
+| wrapable | Boolean |   false   | 是否开启文本换行，只在禁用marquee时有效 | N |
+|showDetail| String/Boolean | false | 默认显示文本为`详情`, 可自定义 | N |
+| z-index  | Number  | -         | 元素层级，样式默认为 5000  | N |
+| external-classes | Array | -   | 样式类名，分别用于设置 组件外层、消息内容、左侧图标、右侧图标等元素类名。`['t-class', 't-class-content', 't-class-left-icon','t-alcas-right-icon', 't-class-detail']` | N |
+
 
 ### Message Events
 

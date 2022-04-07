@@ -7,7 +7,7 @@ const name = `${prefix}-notice-bar`;
 
 @wxComponent()
 export default class NoticeBar extends SuperComponent {
-  externalClasses = ['t-class', 't-class-content', 't-class-left-icon', 't-class-right-icon'];
+  externalClasses = ['t-class', 't-class-content', 't-class-left-icon', 't-class-right-icon', 't-class-detail'];
 
   options = {
     styleIsolation: 'apply-shared' as const,
@@ -15,7 +15,6 @@ export default class NoticeBar extends SuperComponent {
   };
 
   properties = {
-    // ...props,
     /** 内容的对齐方式，默认居中对齐。可选项：top/middle/bottom */
     align: {
       type: String,
@@ -46,11 +45,6 @@ export default class NoticeBar extends SuperComponent {
       value: false,
     },
 
-    /** 元素层级，样式默认为 5000 */
-    zIndex: {
-      type: Number,
-    },
-
     /** 左侧icon */
     leftIcon: {
       type: String,
@@ -64,13 +58,13 @@ export default class NoticeBar extends SuperComponent {
       value: '',
     },
 
-    /** 通知栏模式，可选值为 closeable link */
+    /** 通知栏模式为link时，跳转url */
     url: {
       type: String,
       value: '',
     },
 
-    /** 通知栏模式，可选值为 closeable link */
+    /** 通知栏模式为link时，默认navigate。可选值为 navigate/redirect/reLaunch/switchTab */
     openType: {
       type: String,
       value: 'navigate',
@@ -87,6 +81,10 @@ export default class NoticeBar extends SuperComponent {
       type: String,
       optionalTypes: [Boolean],
       value: false,
+    },
+    /** 元素层级，样式默认为 5000 */
+    zIndex: {
+      type: Number,
     },
   };
 
@@ -152,27 +150,29 @@ export default class NoticeBar extends SuperComponent {
 
           this.setData({
             wrapWidth: Number(wrapRect.width),
-            contentWidth: Number(nodeRect.width),
+            nodeWidth: Number(nodeRect.width),
             duration: duration,
             firstDuration: firstDuration,
           });
 
-          // todo: 首次滚动 存在有点问题～～this.startScrollAnimation(true);
-          // 首次滚动初始位置和动画持续时间为 0 & firstDuration，其于为 wrapWidth & duration
+          /** todo: 首次滚动 存在点问题～～
+           * 首次滚动初始位置和动画持续时间为 0 & firstDuration，其于为 wrapWidth & duration.
+           * 但目前开启首次滚动判断`this.startScrollAnimation(true)`时，会出现首次滚动结束后，开启的第二次滚动时间延长。
+           */
           this.startScrollAnimation();
         });
       });
     },
 
-    startScrollAnimation(isFirst = false) {
+    startScrollAnimation(isFirstScroll = false) {
       this.clearNoticeBarAnimation();
-      const { wrapWidth, contentWidth, firstDuration, duration } = this.data;
+      const { wrapWidth, nodeWidth, firstDuration, duration } = this.data;
 
       // 滚动内容: 初始位置。
-      const durationTime = isFirst ? firstDuration : duration;
+      const durationTime = isFirstScroll ? firstDuration : duration;
       this.setData({
         animationData: this.resetAnimation
-          .translateX(isFirst ? 0 : wrapWidth)
+          .translateX(isFirstScroll ? 0 : wrapWidth)
           .step()
           .export(),
       });
@@ -180,7 +180,7 @@ export default class NoticeBar extends SuperComponent {
       requestAnimationFrame(() => {
         // 滚动内容: 最终位置
         this.setData({
-          animationData: wx.createAnimation({ duration: durationTime }).translateX(-contentWidth).step().export(),
+          animationData: wx.createAnimation({ duration: durationTime }).translateX(-nodeWidth).step().export(),
         });
       });
 
